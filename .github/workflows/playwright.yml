@@ -95,12 +95,32 @@ jobs:
         if: success()
         continue-on-error: true
 
+      - name: Upload Smoke test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-report
+          path: |
+            playwright-report/
+            test-results/
+            allure-results/
+
       - name: Run Critical tests
         run: pnpm test:critical:chrome
         env:
           CI: true
         if: success()
         continue-on-error: true
+
+      - name: Upload Critical test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: critical-test-report
+          path: |
+            playwright-report/
+            test-results/
+            allure-results/
 
       - name: Run Regression tests
         run: pnpm test:regression:chrome
@@ -109,11 +129,11 @@ jobs:
         if: success()
         continue-on-error: true
 
-      - name: Upload test results
+      - name: Upload Regression test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: execution-report
+          name: regression-test-report
           path: |
             playwright-report/
             test-results/
