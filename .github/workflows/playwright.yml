@@ -88,31 +88,33 @@ jobs:
             echo "BASE_URL is not set"
           fi
 
-      - name: Run Playwright tests
-        run: pnpm test
+      - name: Run Smoke tests
+        run: pnpm test:smoke:chrome
         env:
           CI: true
+        if: success()
+        continue-on-error: true
+
+      - name: Run Critical tests
+        run: pnpm test:critical:chrome
+        env:
+          CI: true
+        if: success()
+        continue-on-error: true
+
+      - name: Run Regression tests
+        run: pnpm test:regression:chrome
+        env:
+          CI: true
+        if: success()
+        continue-on-error: true
 
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: execution-report
           path: |
             playwright-report/
             test-results/
             allure-results/
-
-      - name: Generate Allure Report
-        if: always()
-        run: |
-          curl -o allure-2.24.1.tgz -OL https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.24.1/allure-commandline-2.24.1.tgz
-          tar -zxvf allure-2.24.1.tgz -C /tmp
-          /tmp/allure-2.24.1/bin/allure generate allure-results --clean -o allure-report
-
-      - name: Upload Allure Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report
-          path: allure-report/

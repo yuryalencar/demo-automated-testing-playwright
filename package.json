@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:critical": "playwright test --grep @critical",
+    "test:regression": "playwright test --grep @regression",
     "test:chrome": "playwright test --project=chromium",
+    "test:smoke:chrome": "playwright test --grep @smoke --project=chromium",
+    "test:critical:chrome": "playwright test --grep @critical --project=chromium",
+    "test:regression:chrome": "playwright test --grep @regression --project=chromium",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "report": "allure serve allure-results",
