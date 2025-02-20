@@ -1,8 +1,8 @@
-import { test, expect } from "@fixtures/test.fixture";
 import { UseType } from "@fixtures/user-credentials";
+import { test, expect } from "@fixtures/test.fixture";
 
 const invetoryTests = (userType: UseType) => {
-  test.describe(`Inventory Page - ${userType} user`, () => {
+  test.describe(`Inventory Tests - ${userType} user`, () => {
     test.use({ userType: userType });
 
     test("should display correct page title", async ({ inventoryPage }) => {

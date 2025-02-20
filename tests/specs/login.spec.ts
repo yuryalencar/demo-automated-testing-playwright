@@ -1,10 +1,10 @@
 import { test, expect, Page } from "@playwright/test";
 
-import { LoginPage } from "@pages/login.page";
-import { InventoryPage } from "@pages/inventory.page";
-
 import { users } from "@fixtures/user-credentials";
 import { LOGIN_MESSAGES } from "@fixtures/login-messages";
+
+import { LoginPage } from "@pages/login.page";
+import { InventoryPage } from "@pages/inventory.page";
 
 test.describe("Login Tests", () => {
   let loginPage: LoginPage;

@@ -1,13 +1,11 @@
 import { test as base } from '@playwright/test';
 import { InventoryPage } from '@pages/inventory.page';
-import { CheckoutPage } from '@pages/checkout.page';
 import { LoginPage } from '@pages/login.page';
 import { users, UseType } from '@fixtures/user-credentials';
 
 type Fixtures = {
   inventoryPage: InventoryPage;
   loginPage: LoginPage;
-  checkoutPage: CheckoutPage;
   userType: UseType;
 };
 
@@ -24,13 +22,6 @@ export const test = base.extend<Fixtures>({
     await loginPage.navigateToLogin();
     await loginPage.login({ username: users[userType].username, password: users[userType].password });
     await use(inventoryPage);
-  },
-
-  checkoutPage: async ({ page, inventoryPage }, use) => {
-    const checkoutPage = new CheckoutPage(page);
-    await inventoryPage.addItemToCart("Sauce Labs Backpack");
-    await inventoryPage.navigateToCart();
-    await use(checkoutPage);
   },
 });
 
