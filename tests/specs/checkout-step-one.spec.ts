@@ -4,6 +4,7 @@ import { CHECKOUT_STEP_ONE_MESSAGES } from "@fixtures/checkout-step-one-messages
 
 import { CartPage } from "@pages/cart.page";
 import { CheckoutStepOnePage } from "@pages/checkout-step-one.page";
+import { CheckoutStepTwoPage } from "@pages/checkout-step-two.page";
 
 const checkoutStepOneTests = (userType: UseType) => {
   test.describe(`Checkout Step One Tests - ${userType} user`, () => {
@@ -30,12 +31,13 @@ const checkoutStepOneTests = (userType: UseType) => {
       expect(await checkoutStepOnePage.isCancelButtonVisible()).toBeTruthy();
     });
 
-    // test("should proceed to checkout step two with valid information", async () => {
-    //   await checkoutStepOnePage.fillCheckoutInfo("John", "Doe", "12345");
-    //   await checkoutStepOnePage.continueCheckout();
+    test("should proceed to checkout step two with valid information", async ({ page }) => {
+      const checkoutStepTwoPage = new CheckoutStepTwoPage(page);
+      await checkoutStepOnePage.fillCheckoutInfo("John", "Doe", "12345");
+      await checkoutStepOnePage.continueCheckout();
 
-    //   expect(await checkoutStepOnePage.page.url()).toContain("/checkout-step-two.html");
-    // });
+      expect(await checkoutStepTwoPage.isSummaryContainerVisible()).toBeTruthy();
+    });
 
     test("should show error when first name is missing", async () => {
       await checkoutStepOnePage.fillCheckoutInfo("", "Doe", "12345");
