@@ -87,21 +87,57 @@ For other Linux distributions, check the [official Allure documentation](https:/
 
 ### Login Flow
 
-- Standard user login
-- Error scenarios (locked user, invalid credentials)
-- Different user types (performance, visual, problem users)
+- Multiple user type authentication:
+  - Standard user
+  - Performance glitch user
+  - Error user
+  - Visual user
+  - Problem user
+- Error validation:
+  - Locked out user handling
+  - Invalid credentials messaging
+- Error message verification
+- Page navigation validation
 
 ### Inventory Management
 
-- Product sorting (price, alphabetical)
-- Cart operations (add, remove items)
-- Shopping cart badge updates
+- Product listing:
+  - Price sorting (low to high, high to low)
+  - Alphabetical sorting (A to Z)
+  - Product details verification
+- Cart operations:
+  - Single item add/remove
+  - Multiple items management
+  - Cart badge count updates
+  - Cart persistence after page reload
+- Navigation:
+  - Cart page access
+  - Shopping flow continuity
 
 ### Checkout Process
 
-- Information validation
-- Order summary verification
-- Complete checkout flow
+1. Information Form (Step One):
+   - Form field validation:
+     - First name requirement
+     - Last name requirement
+     - Postal code requirement
+   - Error message handling
+   - Navigation controls (continue/cancel)
+
+2. Order Summary (Step Two):
+   - Item list verification
+   - Price calculations:
+     - Subtotal accuracy
+     - Tax computation
+     - Total amount validation
+   - Cart persistence
+   - Navigation options
+
+3. Order Completion:
+   - Success message verification
+   - Order confirmation elements
+   - Post-purchase navigation
+   - Cart status reset
 
 ## 📊 Reporting
 
