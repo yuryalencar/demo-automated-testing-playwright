@@ -5,6 +5,7 @@ import { CartPage } from "@pages/cart.page";
 import { InventoryPage } from "@pages/inventory.page";
 import { CheckoutStepOnePage } from "@pages/checkout-step-one.page";
 import { CheckoutStepTwoPage } from "@pages/checkout-step-two.page";
+import { CheckoutCompletePage } from "@pages/checkout-complete.page";
 
 const checkoutStepTwoTests = (userType: UseType) => {
   test.describe(`Checkout Step Two Tests - ${userType} user`, () => {
@@ -51,10 +52,12 @@ const checkoutStepTwoTests = (userType: UseType) => {
       expect(totalValue).toBeCloseTo(subtotalValue + taxValue, 2);
     });
 
-      // test("should complete order when finish button clicked", async () => {
-      //   await checkoutStepTwoPage.finishCheckout();
-      //   expect(await checkoutStepTwoPage.page.url()).toContain("/checkout-complete.html");
-      // });
+    test("should complete order when finish button clicked", async ({ page }) => {
+      const checkoutCompletePage = new CheckoutCompletePage(page);
+      await checkoutStepTwoPage.finishCheckout();
+      await checkoutCompletePage.waitForPageLoad();
+      expect(await checkoutCompletePage.isCompleteContainerVisible()).toBeTruthy();
+    });
 
     test("should return to inventory when cancel is clicked", async ({ page }) => {
       const inventoryPage = new InventoryPage(page);
