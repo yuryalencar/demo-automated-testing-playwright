@@ -163,4 +163,4 @@ pnpm report
 
 ## 📄 License
 
-ISC License
+MIT License
