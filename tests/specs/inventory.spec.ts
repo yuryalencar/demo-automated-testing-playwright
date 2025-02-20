@@ -56,14 +56,35 @@ const invetoryTests = (userType: UseType) => {
       await expect(cartPage.isCartContainerVisible()).toBeTruthy();
     });
 
-    // @TODO: Fix this test
-    // test('should display correct product details', async () => {
-    //   const [firstProduct] = await inventoryPage.getItemNames();
-    //   expect(firstProduct).toHaveProperty('name');
-    //   expect(firstProduct).toHaveProperty('description');
-    //   expect(firstProduct).toHaveProperty('price');
-    //   expect(firstProduct.price).toMatch(/^\$\d+\.\d{2}$/); // Price format $XX.XX
-    // });
+    test("should add and remove multiple items from cart", async ({ inventoryPage }) => {
+      const itemNames = ["Sauce Labs Backpack", "Sauce Labs Bike Light"];
+
+      for (const itemName of itemNames) {
+        await inventoryPage.addItemToCart(itemName);
+      }
+
+      let cartCount = await inventoryPage.getCartItemCount();
+      expect(cartCount).toBe("2");
+
+      for (const itemName of itemNames) {
+        await inventoryPage.removeItemFromCart(itemName);
+      }
+
+      const cartBadge = await inventoryPage.isShoppingCartBadgeVisible();
+      expect(cartBadge).toBeFalsy();
+    });
+
+    test('should display correct product details', async ({ inventoryPage }) => {
+      const itemName = "Sauce Labs Backpack";
+      const itemDescription = "carry.allTheThings() with the sleek, streamlined Sly Pack";
+      const itemPrice = "$29.99";
+
+      const itemDetails = await inventoryPage.getItemDetails(itemName);
+
+      expect(itemDetails.name).toBe(itemName);
+      expect(itemDetails.description).toContain(itemDescription);
+      expect(itemDetails.price).toBe(itemPrice);
+    });
 
     test("should add multiple items to cart", async ({ inventoryPage }) => {
       const itemNames = [

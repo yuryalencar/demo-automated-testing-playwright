@@ -57,6 +57,21 @@ export class InventoryPage extends AuthenticatedPage {
     return names;
   }
 
+  async getItemDetails(name: string): Promise<{ name: string; description: string; price: string }> {
+    const names = await this.getItemNames();
+    const index = names.findIndex(itemName => itemName === name);
+
+    if (index === -1) {
+      throw new Error(`Item "${name}" not found in inventory`);
+    }
+
+    return {
+      name: await this.getElementText(this.itemNames.nth(index)),
+      description: await this.getElementText(this.itemDescriptions.nth(index)),
+      price: await this.getElementText(this.itemPrices.nth(index))
+    };
+  }
+
   async getItemPrices(): Promise<string[]> {
     const prices: string[] = [];
     const count = await this.itemPrices.count();
