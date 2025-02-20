@@ -11,6 +11,7 @@ This project demonstrates automated testing of a web application using Playwrigh
 
 ## 📦 Project Structure
 
+```
 ├── tests/
 │ ├── pages/ # Page Object Models
 │ ├── specs/ # Test Specifications
@@ -18,6 +19,7 @@ This project demonstrates automated testing of a web application using Playwrigh
 ├── playwright.config.ts
 ├── tsconfig.json
 └── package.json
+```
 
 ## 🚀 Getting Started
 
