@@ -1,6 +1,8 @@
 import { UseType } from "@fixtures/user-credentials";
 import { test, expect } from "@fixtures/test.fixture";
 
+import { CartPage } from "@pages/cart.page";
+
 const invetoryTests = (userType: UseType) => {
   test.describe(`Inventory Tests - ${userType} user`, () => {
     test.use({ userType: userType });
@@ -48,11 +50,11 @@ const invetoryTests = (userType: UseType) => {
       await expect(cartBadge).toBeFalsy();
     });
 
-    // @TODO: Fix this test
-    // test('should navigate to cart page when cart icon is clicked', async () => {
-    //   await inventoryPage.navigateToCart();
-    //   await expect(inventoryPage.page).toHaveURL(/.*cart.html/);
-    // });
+    test('should navigate to cart page when cart icon is clicked', async ({ inventoryPage, page }) => {
+      const cartPage = new CartPage(page);
+      await inventoryPage.navigateToCart();
+      await expect(cartPage.isCartContainerVisible()).toBeTruthy();
+    });
 
     // @TODO: Fix this test
     // test('should display correct product details', async () => {
