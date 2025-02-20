@@ -44,23 +44,48 @@ jobs:
         run: pnpm exec playwright install --with-deps
 
       - name: Create env file
+        env:
+          USERNAME_STANDARD: ${{ secrets.USERNAME_STANDARD }}
+          PASSWORD_STANDARD: ${{ secrets.PASSWORD_STANDARD }}
+          USERNAME_LOCKED_OUT: ${{ secrets.USERNAME_LOCKED_OUT }}
+          PASSWORD_LOCKED_OUT: ${{ secrets.PASSWORD_LOCKED_OUT }}
+          USERNAME_PROBLEM: ${{ secrets.USERNAME_PROBLEM }}
+          PASSWORD_PROBLEM: ${{ secrets.PASSWORD_PROBLEM }}
+          USERNAME_PERFORMANCE_GLITCH: ${{ secrets.USERNAME_PERFORMANCE_GLITCH }}
+          PASSWORD_PERFORMANCE_GLITCH: ${{ secrets.PASSWORD_PERFORMANCE_GLITCH }}
+          USERNAME_ERROR: ${{ secrets.USERNAME_ERROR }}
+          PASSWORD_ERROR: ${{ secrets.PASSWORD_ERROR }}
+          USERNAME_VISUAL: ${{ secrets.USERNAME_VISUAL }}
+          PASSWORD_VISUAL: ${{ secrets.PASSWORD_VISUAL }}
+          USERNAME_INVALID: ${{ secrets.USERNAME_INVALID }}
+          PASSWORD_INVALID: ${{ secrets.PASSWORD_INVALID }}
+          BASE_URL: ${{ secrets.BASE_URL }}
         run: |
-          touch .env
-          echo "USERNAME_STANDARD=${{ secrets.USERNAME_STANDARD }}" >> .env
-          echo "PASSWORD_STANDARD=${{ secrets.PASSWORD_STANDARD }}" >> .env
-          echo "USERNAME_LOCKED_OUT=${{ secrets.USERNAME_LOCKED_OUT }}" >> .env
-          echo "PASSWORD_LOCKED_OUT=${{ secrets.PASSWORD_LOCKED_OUT }}" >> .env
-          echo "USERNAME_PROBLEM=${{ secrets.USERNAME_PROBLEM }}" >> .env
-          echo "PASSWORD_PROBLEM=${{ secrets.PASSWORD_PROBLEM }}" >> .env
-          echo "USERNAME_PERFORMANCE_GLITCH=${{ secrets.USERNAME_PERFORMANCE_GLITCH }}" >> .env
-          echo "PASSWORD_PERFORMANCE_GLITCH=${{ secrets.PASSWORD_PERFORMANCE_GLITCH }}" >> .env
-          echo "USERNAME_ERROR=${{ secrets.USERNAME_ERROR }}" >> .env
-          echo "PASSWORD_ERROR=${{ secrets.PASSWORD_ERROR }}" >> .env
-          echo "USERNAME_VISUAL=${{ secrets.USERNAME_VISUAL }}" >> .env
-          echo "PASSWORD_VISUAL=${{ secrets.PASSWORD_VISUAL }}" >> .env
-          echo "USERNAME_INVALID=${{ secrets.USERNAME_INVALID }}" >> .env
-          echo "PASSWORD_INVALID=${{ secrets.PASSWORD_INVALID }}" >> .env
-          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+          cat << EOF > .env
+          USERNAME_STANDARD=${USERNAME_STANDARD}
+          PASSWORD_STANDARD=${PASSWORD_STANDARD}
+          USERNAME_LOCKED_OUT=${USERNAME_LOCKED_OUT}
+          PASSWORD_LOCKED_OUT=${PASSWORD_LOCKED_OUT}
+          USERNAME_PROBLEM=${USERNAME_PROBLEM}
+          PASSWORD_PROBLEM=${PASSWORD_PROBLEM}
+          USERNAME_PERFORMANCE_GLITCH=${USERNAME_PERFORMANCE_GLITCH}
+          PASSWORD_PERFORMANCE_GLITCH=${PASSWORD_PERFORMANCE_GLITCH}
+          USERNAME_ERROR=${USERNAME_ERROR}
+          PASSWORD_ERROR=${PASSWORD_ERROR}
+          USERNAME_VISUAL=${USERNAME_VISUAL}
+          PASSWORD_VISUAL=${PASSWORD_VISUAL}
+          USERNAME_INVALID=${USERNAME_INVALID}
+          PASSWORD_INVALID=${PASSWORD_INVALID}
+          BASE_URL=${BASE_URL}
+          EOF
+
+      - name: Debug secrets availability
+        run: |
+          if [ -n "${{ secrets.BASE_URL }}" ]; then
+            echo "BASE_URL is set"
+          else
+            echo "BASE_URL is not set"
+          fi
 
       - name: Run Playwright tests
         run: pnpm test
